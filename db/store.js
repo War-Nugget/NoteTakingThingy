@@ -26,8 +26,10 @@ class store {
 
         const newNote = {title, text, id: uuidv1() };
 
-        this.getNotes().then (() => {
-            
-        })
+        this.getNotes().then ((notes) => {
+            notes.push(newNote);
+        });
     }
 }
+
+modules.export = new store()
