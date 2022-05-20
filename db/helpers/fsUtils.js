@@ -30,5 +30,18 @@ const readAndAppend = (content, file) => {
     }
   });
 };
-
-module.exports = { readFromFile, writeToFile, readAndAppend };
+ const readAndDelete = (id, file) => {
+   fs.readFile(file, 'utf8', (err, data) => {
+     if (err) {
+       console.log(err);
+     } else {
+       const parsedData = JSON.parse(data);
+       const filteredData = parsedData.filter((note) => {
+         return note.id !== id
+       })
+       writeToFile(file, filteredData);
+       return filteredData;
+     }
+   });
+ };
+module.exports = { readFromFile, writeToFile, readAndAppend, readAndDelete };

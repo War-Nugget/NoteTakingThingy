@@ -1,12 +1,15 @@
 const fs = require('fs');
+
 const util = require('util');
+const uuidv1 = require('uuid/v1')
+
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const uuidv1 = require('uuid/v1');
 
-class store {
+class Store {
     getNotes(){
         return readFileAsync('db/db.json', 'utf8').then(() => {
             let parsedNotes
@@ -32,4 +35,4 @@ class store {
     }
 }
 
-modules.export = new store()
+modules.export = new Store()
