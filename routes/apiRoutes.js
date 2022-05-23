@@ -1,15 +1,15 @@
 const router = require('express').Router();
-const {v4: uidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const {   
     readFromFile,
     readAndAppend,
     writeToFile,
-    readAndDelete
+    readAndDelete,
 } = require('../helpers/fsUtils');
 
 router.get('/notes', (req, res) =>{
-    res.json('get!')
-})
+    readFromFile('./db/db.json').then((data) =>res.json(JSON.parse(data)));
+});
 router.post('/notes', (req, res) => {
     const newNote = req.body;
     newNote.id = uuidv4();

@@ -19,7 +19,7 @@ const writeToFile = (destination, content) =>
  *  @param {string} file The path to the file you want to save to.
  *  @returns {void} Nothing
  */
-const readAndAppend = (content, file) => {
+const readAndAppend = (id, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
@@ -38,7 +38,7 @@ const readAndAppend = (content, file) => {
        const parsedData = JSON.parse(data);
        const filteredData = parsedData.filter((note) => {
          return note.id !== id
-       })
+       }) 
        writeToFile(file, filteredData);
        return filteredData;
      }
