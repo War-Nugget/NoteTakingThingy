@@ -1,23 +1,22 @@
-const express = require('express');
+const apiRoutes = require("./routes/apiroutes");
+const htmlRoutes = require("./routes/htmlroutes");
+const express = require("express");
 
-// const path = require('path');
-const htmlRoute = require('./routes/htmlRoute');
-const apiRoute = require('./routes/apiRoute');
 const app = express();
+// Port for Heroku
 const PORT = process.env.PORT || 3001;
 
-// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-// API route call
-app.use('/api', apiRoute);
+// API route
+app.use("/api", apiRoutes);
 
+// HTML route
+app.use("/", htmlRoutes);
 
-// HTML Route Call
-app.use('/', htmlRoute);
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+console.log("Visit page here: http://localhost:3001/");
 
-
-// starts PORT server
-app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+// Make data routes and HTML routes
