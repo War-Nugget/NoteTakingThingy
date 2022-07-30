@@ -1,22 +1,32 @@
-const apiRoutes = require("./routes/apiroutes");
-const htmlRoutes = require("./routes/htmlroutes");
-const express = require("express");
+const express = require('express');
+const path = require('path');
+const api = require('./api/index.js');
 
-const app = express();
-// Port for Heroku
 const PORT = process.env.PORT || 3001;
+const app = express();
 
+// Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use('/api', api);
 
-// API route
-app.use("/api", apiRoutes);
+app.use(express.static('public'));
 
-// HTML route
-app.use("/", htmlRoutes);
+// GET Route for homepage
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
-console.log("Visit page here: http://localhost:3001/");
+// GET Route for feedback page
+app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/notes.html'))
+);
 
-// Make data routes and HTML routes
+// Wildcard route to direct users to a 404 page
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+);
+
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
+);
